@@ -1,0 +1,9 @@
+**/target/
+**/data/
+**/.env
+**/.env.local
+**/.idea/
+**/.vscode/
+**/.DS_Store
+**/.vercel/
+*.log
