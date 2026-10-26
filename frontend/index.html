@@ -1,1 +1,215 @@
-<!doctype html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Comics Open | 만화를 더 자유롭게</title><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="style.css"></head><body><header><a class="logo" href="#home">◈ Comics<span>Open</span></a><nav><a href="#home">HOME</a><div class="dropdown"><button>PROJECT ▾</button><div class="dropdown-menu"><a href="#features">주요 기능</a><a href="#translate">번역 체험</a></div></div><a href="#community">COMMUNITY</a><a href="#about">ABOUT</a></nav><button id="accountButton" class="outline">로그인 / 회원가입</button></header><main><section id="home" class="hero"><div class="eyebrow">AI COMIC TRANSLATION PLATFORM</div><h1>언어의 장벽 없이,<br><em>만화의 재미 그대로.</em></h1><p>Comics Open은 이미지 속 일본어를 인식하고 자연스러운 한국어로 번역하는 크롬 확장프로그램 프로젝트입니다.</p><div class="actions"><a class="primary" href="#translate">번역 체험하기 →</a><a class="outline" href="#features">기능 살펴보기</a></div><div class="hero-card"><div class="bubble">こんにちは！<span>안녕하세요!</span></div><div class="flow">이미지 업로드 <b>→</b> Google Vision OCR <b>→</b> AI 번역</div></div></section><section id="features" class="section"><div class="eyebrow">FEATURES</div><h2>Comics Open의 주요 기능</h2><div class="cards"><article class="feature"><div class="symbol">▧</div><h3>이미지 문자 인식</h3><p>Google Cloud Vision OCR을 사용하여 만화 이미지 속 텍스트를 추출합니다.</p></article><article class="feature"><div class="symbol">文</div><h3>자연스러운 AI 번역</h3><p>OpenAI를 활용해 일본어 대사를 문맥에 맞는 한국어로 번역합니다.</p></article><article class="feature"><div class="symbol">▣</div><h3>크롬 확장프로그램</h3><p>웹페이지에서 번역 기능을 이용하는 것을 목표로 개발하고 있습니다.</p></article></div></section><section id="translate" class="section alt"><div class="eyebrow">TRY IT</div><h2>이미지 번역 체험</h2><p class="muted">FastAPI 서버를 실행한 뒤 이미지를 선택하면 OCR 및 번역 API를 호출합니다.</p><div class="translator"><label class="upload" for="imageInput">＋<br>만화 이미지 선택<input type="file" id="imageInput" accept="image/*" hidden></label><div><img id="preview" alt="업로드 이미지 미리보기" hidden><p id="fileName">선택된 파일 없음</p><button class="primary" id="translateButton">OCR + 번역 실행</button><p id="status" aria-live="polite"></p></div><div class="result"><h3>인식된 텍스트</h3><pre id="ocrResult">결과가 여기에 표시됩니다.</pre><h3>한국어 번역</h3><pre id="translationResult">결과가 여기에 표시됩니다.</pre></div></div></section><section id="community" class="section"><div class="eyebrow">COMMUNITY</div><h2>사용자 소통 게시판</h2><p class="muted">로그인 후 글을 작성하고, 본인 게시글을 수정하거나 삭제할 수 있습니다.</p><form id="postForm" class="post-form"><input id="postTitle" placeholder="게시글 제목" maxlength="80" required><textarea id="postContent" placeholder="내용을 입력하세요" maxlength="1000" required></textarea><button class="primary">게시글 등록</button></form><div id="postList"></div></section><section id="about" class="section alt"><div class="eyebrow">ABOUT US</div><h2>Comics Open 프로젝트</h2><p>만화 이미지의 텍스트를 OCR로 추출하고 AI로 번역하는 프로젝트입니다.</p><div class="about-grid"><div><h3>프로젝트 기술</h3><p>HTML · CSS · JavaScript · Java · Spring Boot · H2 · FastAPI · Google Cloud Vision · OpenAI</p><h3>SNS / 외부 링크</h3><p><a href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub ↗</a> · <a href="https://developer.chrome.com/docs/extensions/" target="_blank" rel="noopener noreferrer">Chrome Extensions 문서 ↗</a></p></div><div><h3>지도</h3><iframe title="지도" src="https://maps.google.com/maps?q=South%20Korea&t=&z=5&ie=UTF8&iwloc=&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe><small>예시 지도이며 프로젝트 실제 위치를 의미하지 않습니다.</small></div></div></section></main><footer>© 2026 Comics Open. Graduation Project Demo.</footer><dialog id="accountDialog"><form method="dialog"><button class="close" aria-label="닫기">✕</button></form><h2>Comics Open 계정</h2><div class="tabs"><button id="loginTab" class="active">로그인</button><button id="signupTab">회원가입</button></div><form id="accountForm"><input id="accountName" placeholder="닉네임" hidden><input id="accountEmail" type="email" placeholder="이메일" required><input id="accountPassword" type="password" placeholder="비밀번호 (8자 이상)" minlength="8" required><button class="primary" id="accountSubmit">로그인</button></form><p id="accountMessage" aria-live="polite"></p><small>회원정보는 Spring Boot 서버의 H2 데이터베이스에 저장됩니다.</small></dialog><script src="script.js"></script></body></html>
+
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Comics Open | 만화를 더 자유롭게</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 10월 26일 중간고사 과제 -->
+  <p style="
+    color: #ffffff;
+    background-color: #7c5ce7;
+    text-align: center;
+    padding: 15px;
+    margin: 0;
+    font-size: 20px;
+    font-weight: bold;
+  ">
+    10월26일 중간고사
+  </p>
+
+  <header>
+    <a class="logo" href="#home">◈ Comics<span>Open</span></a>
+    <nav>
+      <a href="#home">HOME</a>
+      <div class="dropdown">
+        <button>PROJECT ▾</button>
+        <div class="dropdown-menu">
+          <a href="#features">주요 기능</a>
+          <a href="#translate">번역 체험</a>
+        </div>
+      </div>
+      <a href="#community">COMMUNITY</a>
+      <a href="#about">ABOUT</a>
+    </nav>
+    <button id="accountButton" class="outline">로그인 / 회원가입</button>
+  </header>
+
+  <main>
+    <section id="home" class="hero">
+      <div class="eyebrow">AI COMIC TRANSLATION PLATFORM</div>
+      <h1>언어의 장벽 없이,<br><em>만화의 재미 그대로.</em></h1>
+      <p>
+        Comics Open은 이미지 속 일본어를 인식하고
+        자연스러운 한국어로 번역하는 크롬 확장프로그램 프로젝트입니다.
+      </p>
+      <div class="actions">
+        <a class="primary" href="#translate">번역 체험하기 →</a>
+        <a class="outline" href="#features">기능 살펴보기</a>
+      </div>
+      <div class="hero-card">
+        <div class="bubble">
+          こんにちは！
+          <span>안녕하세요!</span>
+        </div>
+        <div class="flow">
+          이미지 업로드 <b>→</b> Google Vision OCR
+          <b>→</b> AI 번역
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="section">
+      <div class="eyebrow">FEATURES</div>
+      <h2>Comics Open의 주요 기능</h2>
+      <div class="cards">
+        <article class="feature">
+          <div class="symbol">▧</div>
+          <h3>이미지 문자 인식</h3>
+          <p>
+            Google Cloud Vision OCR을 사용하여
+            만화 이미지 속 텍스트를 추출합니다.
+          </p>
+        </article>
+        <article class="feature">
+          <div class="symbol">文</div>
+          <h3>자연스러운 AI 번역</h3>
+          <p>
+            OpenAI를 활용해 일본어 대사를
+            문맥에 맞는 한국어로 번역합니다.
+          </p>
+        </article>
+        <article class="feature">
+          <div class="symbol">▣</div>
+          <h3>크롬 확장프로그램</h3>
+          <p>
+            웹페이지에서 번역 기능을 이용하는 것을
+            목표로 개발하고 있습니다.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section id="translate" class="section alt">
+      <div class="eyebrow">TRY IT</div>
+      <h2>이미지 번역 체험</h2>
+      <p class="muted">
+        FastAPI 서버를 실행한 뒤 이미지를 선택하면
+        OCR 및 번역 API를 호출합니다.
+      </p>
+      <div class="translator">
+        <label class="upload" for="imageInput">
+          ＋<br>만화 이미지 선택
+          <input type="file" id="imageInput" accept="image/*" hidden>
+        </label>
+        <div>
+          <img id="preview" alt="업로드 이미지 미리보기" hidden>
+          <p id="fileName">선택된 파일 없음</p>
+          <button class="primary" id="translateButton">
+            OCR + 번역 실행
+          </button>
+          <p id="status" aria-live="polite"></p>
+        </div>
+        <div class="result">
+          <h3>인식된 텍스트</h3>
+          <pre id="ocrResult">결과가 여기에 표시됩니다.</pre>
+          <h3>한국어 번역</h3>
+          <pre id="translationResult">결과가 여기에 표시됩니다.</pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="community" class="section">
+      <div class="eyebrow">COMMUNITY</div>
+      <h2>사용자 소통 게시판</h2>
+      <p class="muted">
+        로그인 후 글을 작성하고,
+        본인 게시글을 수정하거나 삭제할 수 있습니다.
+      </p>
+      <form id="postForm" class="post-form">
+        <input id="postTitle" placeholder="게시글 제목"
+               maxlength="80" required>
+        <textarea id="postContent" placeholder="내용을 입력하세요"
+                  maxlength="1000" required></textarea>
+        <button class="primary">게시글 등록</button>
+      </form>
+      <div id="postList"></div>
+    </section>
+
+    <section id="about" class="section alt">
+      <div class="eyebrow">ABOUT US</div>
+      <h2>Comics Open 프로젝트</h2>
+      <p>
+        만화 이미지의 텍스트를 OCR로 추출하고
+        AI로 번역하는 프로젝트입니다.
+      </p>
+      <div class="about-grid">
+        <div>
+          <h3>프로젝트 기술</h3>
+          <p>
+            HTML · CSS · JavaScript · Java · Spring Boot · H2 ·
+            FastAPI · Google Cloud Vision · OpenAI
+          </p>
+          <h3>SNS / 외부 링크</h3>
+          <p>
+            <a href="https://github.com" target="_blank"
+               rel="noopener noreferrer">GitHub ↗</a>
+            ·
+            <a href="https://developer.chrome.com/docs/extensions/"
+               target="_blank" rel="noopener noreferrer">
+              Chrome Extensions 문서 ↗
+            </a>
+          </p>
+        </div>
+        <div>
+          <h3>지도</h3>
+          <iframe
+            title="지도"
+            src="https://maps.google.com/maps?q=South%20Korea&t=&z=5&ie=UTF8&iwloc=&output=embed"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+          <small>
+            예시 지도이며 프로젝트 실제 위치를 의미하지 않습니다.
+          </small>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2026 Comics Open. Graduation Project Demo.
+  </footer>
+
+  <dialog id="accountDialog">
+    <form method="dialog">
+      <button class="close" aria-label="닫기">✕</button>
+    </form>
+    <h2>Comics Open 계정</h2>
+    <div class="tabs">
+      <button id="loginTab" class="active">로그인</button>
+      <button id="signupTab">회원가입</button>
+    </div>
+    <form id="accountForm">
+      <input id="accountName" placeholder="닉네임" hidden>
+      <input id="accountEmail" type="email"
+             placeholder="이메일" required>
+      <input id="accountPassword" type="password"
+             placeholder="비밀번호 (8자 이상)"
+             minlength="8" required>
+      <button class="primary" id="accountSubmit">로그인</button>
+    </form>
+    <p id="accountMessage" aria-live="polite"></p>
+    <small>
+      회원정보는 Spring Boot 서버의 H2 데이터베이스에 저장됩니다.
+    </small>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>
